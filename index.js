@@ -1,11 +1,20 @@
-const http = require('http');
+'use strict';
 
-const server = http.createServer((request, response) => {
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello World!");
+const express = require('express');
+
+const app = express();
+
+app.get('/', async (req, res) => {
+  res.status(200).send('CSU-Hackfest-Lab-App is running!').end();
 });
 
-const port = process.env.PORT || 1337;
-server.listen(port);
 
-console.log("Server running at http://localhost:%d", port);
+// Start the server
+const PORT = process.env.PORT || 8090;
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+  console.log('Press Ctrl+C to quit.');
+});
+
+
+module.exports = app;
