@@ -141,7 +141,9 @@
             "db_host": "[reference(resourceId('Microsoft.Sql/servers', variables('sqlserverName'))).fullyQualifiedDomainName]",
             "db_user": "[parameters('sqlAdministratorLogin')]",
             "db_password": "[parameters('sqlAdministratorLoginPassword')]",
-            "db_name" : "[variables('databaseName')]"
+            "db_name" : "[variables('databaseName')]",
+            "SCM_DO_BUILD_DURING_DEPLOYMENT" : "true",
+            "WEBSITE_NODE_DEFAULT_VERSION" : "6.9.1"
         }
       },
       {
