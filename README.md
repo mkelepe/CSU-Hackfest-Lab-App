@@ -7,9 +7,9 @@ Sample Node.js App for the Lab of CSU Hackfest - Azure Monitor Introduction
 This is a templated deployment of an Azure architecture for hosting a web application and an SQL Database, having all the related PaaS components.
 
 Database initialization script:
-`
+```
 CREATE TABLE sampledb.dbo.mytable (
 	[key] numeric(38,0) NOT NULL,
 	value numeric(38,0) NULL
 );
-`
+```
