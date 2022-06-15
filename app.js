@@ -4,10 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-// var appInsights = require('applicationinsights');
-// if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING){
-//   appInsights.setup().start();
-// }
+var appInsights = require('applicationinsights');
+if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING){
+  appInsights.setup().start();
+}
 
 var indexRouter = require('./routes/index');
 var countNumbersRouter = require('./routes/count-numbers');
