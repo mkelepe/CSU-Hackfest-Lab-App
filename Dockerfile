@@ -13,7 +13,6 @@ RUN npm install -g pm2 \
 # setup default site
 RUN rm -f /etc/ssh/sshd_config
 COPY startup /opt/startup
-COPY hostingstart.html /opt/startup
 
 # configure startup
 RUN mkdir -p /tmp

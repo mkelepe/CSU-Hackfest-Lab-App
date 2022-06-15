@@ -2,7 +2,7 @@
   "name": "app",
   "version": "1.0.0",
   "description": "Express-driven static site hosted from default App Service wwwroot directory",
-  "main": "dapp.js",
+  "main": "app.js",
   "dependencies": {
     "express": "4.15.3"
   },
