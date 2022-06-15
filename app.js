@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', async (req, res) => {
-  res.status(200).send('CSU-Hackfest-Lab-App is running!').end();
+  res.status(200).send('CSU-Hackfest-Lab-App is running! ').end();
 });
 
 
