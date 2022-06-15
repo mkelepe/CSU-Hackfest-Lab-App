@@ -99,66 +99,59 @@
         }
       },
       {
-        "type": "Microsoft.Web/sites",
-        "apiVersion": "2020-06-01",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2016-08-01",
+      "name": "[variables('webSiteName')]",
+      "kind": "app,linux,container",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]",
+        "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
+      ],
+      "properties": {
         "name": "[variables('webSiteName')]",
-        "location": "[resourceGroup().location]",
-        "tags": {
-          "[format('hidden-related:{0}', resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName')))]": "empty",
-          "displayName": "Website"
+        "siteConfig": {
+          "linuxFxVersion": "[concat('DOCKER|', 'mkelepeshis/sendgrid-webhook-app:latest')]",
+          "alwaysOn": true,
+          "appSettings": [
+            {
+              "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+              "value": "false"
+            },
+            {
+              "name": "DOCKER_REGISTRY_SERVER_URL",
+              "value": "hub.docker.com"
+            },
+            {
+              "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+              "value": "mkelepeshis"
+            },
+            // {
+            //   "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+            //   "value": "[parameters('dockerRegistryPassword')]"
+            // },
+            {
+              "name": "db_host",
+              "value": "[reference(resourceId('Microsoft.Sql/servers', variables('sqlserverName'))).fullyQualifiedDomainName]"
+            },
+            {
+              "name": "db_user",
+              "value": "[parameters('sqlAdministratorLogin')]"
+            },
+            {
+              "name": "db_password",
+              "value": "[parameters('sqlAdministratorLoginPassword')]"
+            },
+            {
+              "name": "db_name",
+              "value": "[variables('databaseName')]"
+            }
+          ]
         },
-        "properties": {
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
-        },
-        "dependsOn": [
-          "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
-        ]
-      },
-      {
-        "type": "Microsoft.Web/sites/config",
-        "apiVersion": "2020-06-01",
-        "name": "[format('{0}/connectionstrings', variables('webSiteName'))]",
-        "properties": {
-          "DefaultConnection": {
-            "value": "[format('Data Source=tcp:{0},1433;Initial Catalog={1};User Id={2}@{3};Password={4};', reference(resourceId('Microsoft.Sql/servers', variables('sqlserverName'))).fullyQualifiedDomainName, variables('databaseName'), parameters('sqlAdministratorLogin'), reference(resourceId('Microsoft.Sql/servers', variables('sqlserverName'))).fullyQualifiedDomainName, parameters('sqlAdministratorLoginPassword'))]",
-            "type": "SQLAzure"
-          }
-        },
-        "dependsOn": [
-          "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]",
-          "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
-        ]
-      },
-      {
-        "type": "Microsoft.Web/sites/config",
-        "name": "[format('{0}/appsettings', variables('webSiteName'))]",
-        "apiVersion": "2015-08-01",
-        "dependsOn": [
-          "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]",
-          "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
-        ],
-        "properties": {
-            "db_host": "[reference(resourceId('Microsoft.Sql/servers', variables('sqlserverName'))).fullyQualifiedDomainName]",
-            "db_user": "[parameters('sqlAdministratorLogin')]",
-            "db_password": "[parameters('sqlAdministratorLoginPassword')]",
-            "db_name" : "[variables('databaseName')]",
-            "SCM_DO_BUILD_DURING_DEPLOYMENT" : "true",
-            "WEBSITE_NODE_DEFAULT_VERSION" : "8.0.0"
-        }
-      },
-      {
-        "type": "Microsoft.Web/sites/sourcecontrols",
-        "apiVersion": "2021-02-01",
-        "name": "[format('{0}/{1}', variables('webSiteName'), 'web')]",
-        "properties": {
-          "repoUrl": "https://github.com/mkelepe/CSU-Hackfest-Lab-App",
-          "branch": "main",
-          "isManualIntegration": true
-        },
-        "dependsOn": [
-          "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
-        ]
-      },
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
+      }
+    },
+
       {
         "type": "Microsoft.Insights/components",
         "apiVersion": "2018-05-01-preview",
