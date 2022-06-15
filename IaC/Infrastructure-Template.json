@@ -9,29 +9,6 @@
       }
     },
     "parameters": {
-      "skuName": {
-        "type": "string",
-        "defaultValue": "F1",
-        "allowedValues": [
-          "F1",
-          "D1",
-          "B1",
-          "B2",
-          "B3",
-          "S1",
-          "S2",
-          "S3",
-          "P1",
-          "P2",
-          "P3",
-          "P4"
-        ]
-      },
-      "skuCapacity": {
-        "type": "int",
-        "defaultValue": 1,
-        "minValue": 1
-      },
       "sqlAdministratorLogin": {
         "type": "string",
         "defaultValue": "dbadminuser"
@@ -89,15 +66,21 @@
         ]
       },
       {
-        "type": "Microsoft.Web/serverfarms",
-        "apiVersion": "2020-06-01",
-        "name": "[variables('hostingPlanName')]",
-        "location": "[resourceGroup().location]",
-        "sku": {
-          "name": "[parameters('skuName')]",
-          "capacity": "[parameters('skuCapacity')]"
-        }
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-06-01",
+      "name": "[variables('hostingPlanName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "B1",
+        "tier": "Basic"
       },
+      "kind": "linux",
+      "properties": {
+        "targetWorkerSizeId": 0,
+        "targetWorkerCount": 1,
+        "reserved": true
+      }
+    },
       {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2016-08-01",
@@ -111,7 +94,7 @@
       "properties": {
         "name": "[variables('webSiteName')]",
         "siteConfig": {
-          "linuxFxVersion": "[concat('DOCKER|', 'mkelepeshis/sendgrid-webhook-app:latest')]",
+          "linuxFxVersion": "[concat('DOCKER|', 'mkelepeshis/csu-hackfest-lab-app')]",
           "alwaysOn": true,
           "appSettings": [
             {
@@ -120,16 +103,16 @@
             },
             {
               "name": "DOCKER_REGISTRY_SERVER_URL",
-              "value": "hub.docker.com"
+              "value": "https://index.docker.io"
             },
             {
               "name": "DOCKER_REGISTRY_SERVER_USERNAME",
-              "value": "mkelepeshis"
+              "value": ""
             },
-            // {
-            //   "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
-            //   "value": "[parameters('dockerRegistryPassword')]"
-            // },
+            {
+              "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+              "value": ""
+            },
             {
               "name": "db_host",
               "value": "[reference(resourceId('Microsoft.Sql/servers', variables('sqlserverName'))).fullyQualifiedDomainName]"

@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 COPY ./package.json /usr/src/app/
 RUN npm install && npm cache clean --force
 COPY ./ /usr/src/app
-# ADD .production-env .env
+ADD .production-env .env
 ENV NODE_ENV production
 ENV PORT 80
 EXPOSE 80
