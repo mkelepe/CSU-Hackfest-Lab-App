@@ -138,10 +138,10 @@
           "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
         ],
         "properties": {
-            "db_host": "reference(resourceId('Microsoft.Sql/servers', variables('sqlserverName'))).fullyQualifiedDomainName",
-            "db_user": "parameters('sqlAdministratorLogin')",
-            "db_password": "parameters('sqlAdministratorLoginPassword')",
-            "db_name" : "variables('databaseName')"
+            "db_host": "[reference(resourceId('Microsoft.Sql/servers', variables('sqlserverName'))).fullyQualifiedDomainName]",
+            "db_user": "[parameters('sqlAdministratorLogin')]",
+            "db_password": "[parameters('sqlAdministratorLoginPassword')]",
+            "db_name" : "[variables('databaseName')]"
         }
       },
       {
