@@ -1,6 +1,7 @@
 {
   "name": "msdocs-javascript-nodejs-server",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
     "start": "cross-env-shell DEBUG=express:* node index.js",
     "format": "prettier --write ."
