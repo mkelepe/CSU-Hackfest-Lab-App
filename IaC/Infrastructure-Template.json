@@ -130,6 +130,21 @@
         ]
       },
       {
+        "type": "Microsoft.Web/sites/config",
+        "name": "[format('{0}/appsettings', variables('webSiteName'))]",
+        "apiVersion": "2015-08-01",
+        "dependsOn": [
+          "[resourceId('Microsoft.Sql/servers', variables('sqlserverName'))]",
+          "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
+        ],
+        "properties": {
+            "db_host": "reference(resourceId('Microsoft.Sql/servers', variables('sqlserverName'))).fullyQualifiedDomainName",
+            "db_user": "parameters('sqlAdministratorLogin')",
+            "db_password": "parameters('sqlAdministratorLoginPassword')",
+            "db_name" : "variables('databaseName')"
+        }
+      },
+      {
         "type": "Microsoft.Web/sites/sourcecontrols",
         "apiVersion": "2021-02-01",
         "name": "[format('{0}/{1}', variables('webSiteName'), 'web')]",
