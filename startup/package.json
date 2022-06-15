@@ -1,8 +1,8 @@
 {
-  "name": "default-static-site",
+  "name": "app",
   "version": "1.0.0",
   "description": "Express-driven static site hosted from default App Service wwwroot directory",
-  "main": "default-static-site.js",
+  "main": "dapp.js",
   "dependencies": {
     "express": "4.15.3"
   },

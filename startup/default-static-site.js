@@ -1,7 +1,20 @@
-var express = require('express');
-var server = express();
-var options = {
-    index: ['index.html','hostingstart.html']
-};
-server.use('/', express.static('/opt/startup', options));
-server.listen(process.env.PORT);
+'use strict';
+
+const express = require('express');
+
+const app = express();
+
+app.get('/', async (req, res) => {
+  res.status(200).send('CSU-Hackfest-Lab-App is running!').end();
+});
+
+
+// Start the server
+const PORT = process.env.PORT || 80;
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+  console.log('Press Ctrl+C to quit.');
+});
+
+
+module.exports = app;
