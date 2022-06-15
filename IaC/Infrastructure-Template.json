@@ -130,6 +130,19 @@
         ]
       },
       {
+        "type": "Microsoft.Web/sites/sourcecontrols",
+        "apiVersion": "2021-02-01",
+        "name": "[format('{0}/{1}', parameters('webSiteName'), 'web')]",
+        "properties": {
+          "repoUrl": "https://github.com/mkelepe/CSU-Hackfest-Lab-App",
+          "branch": "main",
+          "isManualIntegration": true
+        },
+        "dependsOn": [
+          "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
+        ]
+      },
+      {
         "type": "Microsoft.Insights/components",
         "apiVersion": "2018-05-01-preview",
         "name": "[format('AppInsights{0}', variables('webSiteName'))]",
