@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-/* POSTrandom number to DB. */
-router.get('/', function(req, res, next) {
+/* POST random number to DB. */
+router.post('/', function(req, res, next) {
 
   var random_number= Math.floor(Math.random() * 1000);
   
